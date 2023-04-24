@@ -18,11 +18,15 @@ app.post('/register', (req, res) => {
         const table = "register_login"
             // console.log(req.body)
         let create = register(table, name, email, password)
+        console.log(req.body)
+        console.log(create)
         create.then(function(val) {
             if (val) {
+                console.log(val)
                 res.send("Registration Success, Now LogIn")
 
             } else {
+                console.log(val)
                 res.send("User Already Exists OR Error, try again after some time")
 
             }
@@ -51,17 +55,19 @@ async function dbConnect(table) {
 }
 const register = async(table, name, email, password) => {
     try {
+        let result = false;
         const db = await dbConnect(table)
         let find = await db.findOne({ email: email })
         if (find != undefined) {
             result = false
         } else {
             const hash = bcrypt.hashSync(password, 8)
-            const result = await db.insertOne({
+            result = await db.insertOne({
                 name: name,
                 email: email,
                 password: hash
             })
+            result = true
         }
         return result
 
