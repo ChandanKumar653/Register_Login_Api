@@ -24,7 +24,7 @@ app.post('/register', (req, res) => {
 
         create.then(function(val) {
             console.log(val.body)
-            if (val.body === "Registration successful") {
+            if (val.body === "Success") {
 
                 res.send("Registration Success, Now LogIn")
 
@@ -106,11 +106,11 @@ const register = async(table, name, email, password) => {
                     email: email,
                     password: hash
                 })
-                // console.log(result.acknowledge)
-            if (result.acknowledge) {
+                // console.log(result.acknowledged)
+            if (result.acknowledged) {
                 return {
                     statusbar: 200,
-                    body: "Registration successful"
+                    body: "Success"
                 };
             } else {
                 return {
