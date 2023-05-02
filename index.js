@@ -60,7 +60,7 @@ app.post('/login', (req, res) => {
             } else if (val.body === "Email Not Registered") {
                 res.send("Email Not Registered")
             } else if (val.body === "Login Success") {
-                res.send("Logged In")
+                res.status(200).json(val.x)
             } else {
                 res.send("Error, Something went wrong, Try again after some time")
             }
@@ -138,10 +138,12 @@ const login = async(table, email, password) => {
 
         if (info != undefined) {
             // let x = await db.findOne({ password: password })
+            let x="";
             if (bcrypt.compareSync(password, info.password)) {
                 return {
                     statusCode: 200,
-                    body: "Login Success"
+                    body: "Login Success",
+                    x:info.name
                 };
             } else {
                 return {
