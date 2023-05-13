@@ -25,9 +25,9 @@ app.post('/register', (req, res) => {
         create.then(function(val) {
             console.log(val.body)
             if (val.body === "Success") {
-
-                res.send("Registration Success, Now LogIn")
-
+                   
+//                 res.send("Registration Success, Now LogIn")
+res.status(202).render("login.html");
             } else if (val.body === "Email exists") {
 
                 res.send("User Already Exists")
