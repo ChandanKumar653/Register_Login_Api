@@ -74,9 +74,20 @@ app.post('/login', (req, res) => {
     }
 
 })
+app.get('/count', async(req, res) => {
+    try {
+        const table = "register_login"
+        let c = await count(table);
+        console.log(c);
+        res.send(String(c))
+    } catch (e) {
+        res.send(e.message)
+    }
+})
 app.listen(port, () => {
     console.log("Server started at port " + port)
 })
+
 async function dbConnect(table) {
     try {
         const result = await client.connect()
@@ -126,6 +137,15 @@ const register = async(table, name, email, password) => {
             statusCode: 500,
             body: e.message
         }
+    }
+}
+async function count(table) {
+    try {
+        let db = await dbConnect(table);
+        const count = await db.countDocuments({});
+        return count;
+    } catch (e) {
+        return e.message
     }
 }
 const login = async(table, email, password) => {
